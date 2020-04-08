@@ -81,7 +81,7 @@ int main(){
     int hbloc = h/20;
     int wbloci = w/3;
     int v0 = 10;
-    list<int> pile; // pos et taille de chaque bloc
+    list<int> pile; // taille de chaque bloc
 
     init(w,h,Wmain,hsol,wbloci,pile);
 
