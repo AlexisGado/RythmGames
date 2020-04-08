@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 # Define a new project
-project(Exo_3)
+project(atel_prog)
 
 # Find Imagine++ library
 file(TO_CMAKE_PATH "$ENV{IMAGINEPP_ROOT}/CMake" p)
@@ -13,8 +13,8 @@ find_package(Imagine REQUIRED)
 set(CMAKE_CXX_STANDARD 11)
 
 # Create a new executable with the source main.cpp
-add_executable(Exo_3 Exo_3.cpp)
+add_executable(atel_prog stack.cpp)
 
 # Link the created executable to the Imagine++ graphics library
-ImagineUseModules(Exo_3 Graphics)
+ImagineUseModules(atel_prog Graphics)
 
