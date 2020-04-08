@@ -20,7 +20,7 @@ int Random(int a, int b) //randrange(a,b)
 }
 
 
-void init(int w,int h, Window& Wmain,int hsol,int wbloci,list<int[2]> & pile)
+void init(int w,int h, Window& Wmain,int hsol,int wbloci,list<int> & pile)
 {
     Wmain = openWindow(w,h);
     setActiveWindow(Wmain);
@@ -30,18 +30,18 @@ void init(int w,int h, Window& Wmain,int hsol,int wbloci,list<int[2]> & pile)
     fillRect(xi,hsol,wbloci,h,BLACK);
 
     drawString(xi+10,hsol-30,"Cliquez pour commencer",BLUE,20,0,false,true);
-    pile.push_front({xi,wbloci});
+    pile.push_front(wbloci);
 }
 
 
-void affiche(list<int[2]> pile,Window Wmain)
+void affiche(list<int> pile,Window Wmain)
 {
 
 }
 
 
 
-bool bougeBloc(list<int[2]>& pile)
+bool bougeBloc(list<int>& pile)
 {
 
 
@@ -49,7 +49,7 @@ bool bougeBloc(list<int[2]>& pile)
 }
 
 
-bool play(Window Wmain, int v0,int hbloc,list<int[2]>& pile)
+bool play(Window Wmain, int v0,int hbloc,list<int>& pile)
 {
     while (true)
     {
@@ -81,7 +81,7 @@ int main(){
     int hbloc = h/20;
     int wbloci = w/3;
     int v0 = 10;
-    list<int[2]> pile; // pos et taille de chaque bloc
+    list<int> pile; // pos et taille de chaque bloc
 
     init(w,h,Wmain,hsol,wbloci,pile);
 
