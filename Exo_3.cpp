@@ -7,6 +7,8 @@ using namespace Imagine;
 #include <ctime>
 using namespace std ;
 
+// Alexis t'es beau
+
 void InitRandom()
 {
     srand((unsigned int)time(0));
