@@ -13,7 +13,7 @@ find_package(Imagine REQUIRED)
 set(CMAKE_CXX_STANDARD 11)
 
 # Create a new executable with the source main.cpp
-add_executable(atel_prog stack.cpp)
+add_executable(atel_prog stack.cpp stack_louise.cpp stack_louise.h)
 
 # Link the created executable to the Imagine++ graphics library
 ImagineUseModules(atel_prog Graphics)
