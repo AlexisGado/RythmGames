@@ -3,24 +3,34 @@
 
 
 
-void colorie(list<point> pile){
-    //on remet tout l'écran en blanc puis on colorie en fonction de qui est où
+void colorie(list<point> pile, int h){
+    //objectif : colorier la grille à un instant donné
+    //fonctionnement : on remet tout l'écran en blanc puis on colorie en fonction de qui est où
     clearWindow();
     while(!pile.empty()){
         point bloc=pile.back();
         pile.pop_back();
-        fillRect(bloc.x, bloc.y, wbloc, hbloc, bloc.c);
+        if (bloc.y>0 && bloc.y+hbloc<h){
+            fillRect(bloc.x, bloc.y, wbloc, hbloc, bloc.c);
+        }
+        else if (bloc.y<0){ //si on est en haut de la fenetre
+            fillRect(bloc.x, 0, wbloc, hbloc+bloc.y, bloc.c);
+        }
+        else if (bloc.y+hbloc>h){ //si on est en bas de la fenetre
+            fillRect(bloc.x, bloc.y, wbloc, h-bloc.y, bloc.c);
+        }
     }
 }
 
-list<point> avance(list<point> pile, int v, int h){
+void avance(list<point>&pile, int v, int h){
     //fait avancer d'une unité tous les blocs
     list<point> pile_annexe;
+    point bloc;
     while(!pile.empty()){
         //on modifie toutes les vitesses
-        point bloc=pile.back();
+        bloc=pile.back();
         pile.pop_back();
-        if (bloc.y+v<h){
+        if (bloc.y+v<=h){ //si la case ne sort pas du cadre, on l'ajoute
             bloc.y+=v;
             pile_annexe.push_front(bloc);
         }
@@ -30,7 +40,17 @@ list<point> avance(list<point> pile, int v, int h){
         pile_annexe.pop_back();
         pile.push_front(bloc);
     }
-    //on regarde s'il faut ajouter un bloc :
+    //on regarde s'il faut ajouter un bloc tout en haut :
+    bloc=pile.back();
+    if (bloc.y>0){
+        int pos=Random(0, 4); // /!\ ATTENTION /!\ à vérifier, peut être que c'est entre 0 et 3
+        point nouveau_bloc;
+        nouveau_bloc.y=-hbloc;
+        nouveau_bloc.x=pos*wbloc;
+        nouveau_bloc.c=BLACK;
+        pile.push_back(nouveau_bloc);
+    }
+
 }
 
 bool bougeBloc(list<point>& pile,int v, int h, int& score)
@@ -39,7 +59,7 @@ bool bougeBloc(list<point>& pile,int v, int h, int& score)
     point bloc = pile.front(); //le bloc sur lequel il faut cliquer
     int pos= bloc.x/wbloc;//position de ce bloc, entre 0 et 3
 
-    if (bloc.y+hbloc > h) //si la touche est sortie de l'écran alors qu'on n'a pas cliqué
+    if (bloc.y>=h) //si la touche est sortie de l'écran alors qu'on n'a pas cliqué
     {
         return false;
     }
@@ -63,15 +83,9 @@ bool bougeBloc(list<point>& pile,int v, int h, int& score)
 
     }
 
+    avance(pile, v, h);
 
-    int k=pile.size();
-
-    for (int j=0; j<k; j++){
-
-    }
-    bloc.y+=v; //on fait avancer
-
-    colorie(pile);
+    colorie(pile, h);
 
     return true;
 }

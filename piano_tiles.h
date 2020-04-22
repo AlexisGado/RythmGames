@@ -9,5 +9,6 @@ struct point {
     Imagine::Color c;
 };
 
-void colorie(list<point> pile);
+void colorie(list<point> pile, int h);
+void avance(list<point>&pile, int v, int h);
 bool bougeBloc(list<point>& pile,int v, int h, int& score);
