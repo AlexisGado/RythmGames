@@ -1,4 +1,13 @@
 #pragma once
+#include "general.h"
 
-const int wbloc=10;
+const int wbloc=wfen/4, hbloc=hfen/4; //4 cases latérales, 4 cases en hauteur
+const char cases[4]={'D', 'F', 'J', 'K'};
 
+struct point {
+    int x,y; //coordonées
+    Imagine::Color c;
+};
+
+void colorie(list<point> pile);
+bool bougeBloc(list<point>& pile,int v, int h, int& score);
