@@ -3,7 +3,7 @@
 
 
 
-void colorie(list<point> pile, int h){
+void PianoTiles::colorie(list<point> pile){
     //objectif : colorier la grille à un instant donné
     //fonctionnement : on remet tout l'écran en blanc puis on colorie en fonction de qui est où
     clearWindow();
@@ -22,7 +22,7 @@ void colorie(list<point> pile, int h){
     }
 }
 
-void avance(list<point>&pile, int v, int h){
+void PianoTiles::avance(){
     //fait avancer d'une unité tous les blocs
     list<point> pile_annexe;
     point bloc;
@@ -53,7 +53,7 @@ void avance(list<point>&pile, int v, int h){
 
 }
 
-bool bougeBloc(list<point>& pile,int v, int h, int& score)
+bool PianoTiles::bougeBloc()
 {
     //pile est la liste des blocs, v la vitesse des blocs, h la hauteur de la fenêtre, score le score actuel du joueur
     point bloc = pile.front(); //le bloc sur lequel il faut cliquer
@@ -83,9 +83,10 @@ bool bougeBloc(list<point>& pile,int v, int h, int& score)
 
     }
 
-    avance(pile, v, h);
+    avance();
 
-    colorie(pile, h);
+    list<point> pileCopie=pile;
+    colorie(pileCopie);
 
     return true;
 }
