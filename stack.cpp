@@ -10,18 +10,11 @@ using namespace std ;
 #include <list>
 #include <tuple>
 
+#include "general.h"
+
 using lis = list<pair<int,double>>;
 using couple = pair<int,double>;
 
-void InitRandom()
-{
-    srand((unsigned int)time(0));
-}
-
-int Random(int a, int b) //randrange(a,b)
-{
-    return int(a + (b-a)*double(rand())/RAND_MAX);
-}
 
 
 void init(int w,int h, Window& Wmain,int hsol,int wbloci,int hbloc,lis & pile)
