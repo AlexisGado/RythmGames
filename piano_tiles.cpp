@@ -1,14 +1,5 @@
 #include "piano_tiles.h"
-
-void InitRandom()
-{
-    srand((unsigned int)time(0));
-}
-
-int Random(int a, int b) //randrange(a,b)
-{
-    return int(a + (b-a)*double(rand())/RAND_MAX);
-}
+#include "general.h"
 
 
 int main(){

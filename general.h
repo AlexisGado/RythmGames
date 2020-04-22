@@ -14,3 +14,5 @@ using namespace std ;
 
 void InitRandom();
 int Random(int a, int b); //randrange(a,b)
+
+const int wfen=800, hfen=600; //taille de la fenêtre de jeu
