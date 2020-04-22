@@ -13,8 +13,7 @@ find_package(Imagine REQUIRED)
 set(CMAKE_CXX_STANDARD 11)
 
 # Create a new executable with the source main.cpp
-add_executable(atel_prog stack.cpp piano_tiles.cpp piano_tiles.h general.cpp general.h)
-
+add_executable(atel_prog main.cpp stack.cpp stack.h piano_tiles.cpp piano_tiles.h general.cpp general.h)
 # Link the created executable to the Imagine++ graphics library
 ImagineUseModules(atel_prog Graphics)
 

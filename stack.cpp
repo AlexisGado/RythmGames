@@ -1,23 +1,10 @@
-#include <iostream>
-using namespace std;
-#include <Imagine/Graphics.h>
-using namespace Imagine;
-
-#include <cstdlib>
-#include <ctime>
-using namespace std ;
-
-#include <list>
-#include <tuple>
-
-#include "general.h"
-
-using lis = list<pair<int,double>>;
-using couple = pair<int,double>;
+#include "stack.h"
 
 
 
-void init(int w,int h, Window& Wmain,int hsol,int wbloci,int hbloc,lis & pile)
+
+
+void Stack::init()
 {
     Wmain = openWindow(w,h);
     setActiveWindow(Wmain);
@@ -31,35 +18,33 @@ void init(int w,int h, Window& Wmain,int hsol,int wbloci,int hbloc,lis & pile)
 }
 
 
-void afficheTout(lis pile,int w,int h,int hbloc,int hsol,int score)
+void Stack::afficheTout(lis pileCopie)
 {
     clearWindow();
 
     int hactu = hsol;
 
-    while(!pile.empty())
+    while(!pileCopie.empty())
     {
-        couple bloc = pile.front();
-        pile.pop_front();
+        couple bloc = pileCopie.front();
+        pileCopie.pop_front();
         fillRect(int(bloc.second),hactu,bloc.first,hbloc,BLACK);
         hactu+=hbloc;
         if (hactu>h)
             break;
     }
-
     drawString(w/2-5,30,to_string(score),BLUE,20,0,false,true);
-
 }
 
 
-couple genBloc(int wbloc)
+couple Stack::genBloc(int wbloc)
 {
     int xdep = -wbloc;
     return couple(wbloc,xdep);
 }
 
 
-int calcTaille(couple mouv,couple fixe)
+int Stack::calcTaille(couple mouv,couple fixe)
 {
     if (mouv.second<fixe.second)
         return int(mouv.second)+mouv.first-int(fixe.second);
@@ -68,7 +53,7 @@ int calcTaille(couple mouv,couple fixe)
 }
 
 
-bool bougeBloc(lis& pile,double v,int w, int h,int hbloc,int hsol, int& score)
+bool Stack::bougeBloc()
 {
     couple bloc = pile.front();
     pile.pop_front();
@@ -98,7 +83,8 @@ bool bougeBloc(lis& pile,double v,int w, int h,int hbloc,int hsol, int& score)
         pile.push_front(bloc);
 
         fillRect(int(bloc.second),hsol-hbloc,bloc.first,hbloc,WHITE);
-        afficheTout(pile,w,h,hbloc,hsol,score);
+        lis pileCopie = pile;
+        afficheTout(pileCopie);
 
         bloc = genBloc(nvTaille);
     }
@@ -115,16 +101,17 @@ bool bougeBloc(lis& pile,double v,int w, int h,int hbloc,int hsol, int& score)
 }
 
 
-bool play(int w,int h, double v0,int hbloc,int wbloci,int hsol,lis& pile,int& score)
+bool Stack::play()
 {
     pile.push_front(genBloc(wbloci));
 
     while (true)
     {
 
-        if (!bougeBloc(pile,v0,w,h,hbloc,hsol,score))
+        if (!bougeBloc())
         {
-            afficheTout(pile,w,h,hbloc,hsol,score);
+            lis pileCopie = pile;
+            afficheTout(pileCopie);
             cout<<"Perdu!"<<endl;
             cout<<"Score : "<<pile.size()-1<<endl;
             break;
@@ -132,41 +119,23 @@ bool play(int w,int h, double v0,int hbloc,int wbloci,int hsol,lis& pile,int& sc
 
     }
 
-
     return true;
 }
 
 
+void Stack::jeuSolo()
+{
+    init();
 
-
-
-
-int main(){
-    int w=800,h=600;
-    Window Wmain;
-
-    int hsol = h/4;
-    int hbloc = h/20;
-    int wbloci = w/3;
-    double v0 = 0.005;
-    lis pile; // taille de chaque bloc
-    int score = 0;
-
-    init(w,h,Wmain,hsol,wbloci,hbloc,pile);
-
-    anyClick();
+    getKey();
 
     fillRect(0,0,w,hsol,WHITE);
 
 
-    play(w,h,v0,hbloc,wbloci,hsol,pile,score);
+    play();
 
+    closeWindow(Wmain);
 
-
-
-
-
-    endGraphics();
-    return 0;
 }
+
 
