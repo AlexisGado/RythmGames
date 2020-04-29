@@ -1,12 +1,9 @@
-
-#include "stack2.h"
-
+#include "stack.h"
+#include "general.h"
+#include "piano_tiles.h"
 
 int main()
 {
-    Stack2 S;
-
-    S.jeuSolo();
 
     return 0;
 }
