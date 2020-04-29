@@ -1,13 +1,12 @@
 
-#include "stack.h"
+#include "stack2.h"
 
 
 int main()
 {
-    Stack Sta;
-    Sta.jeuSolo();
+    Stack2 S;
 
+    S.jeuSolo();
 
-    endGraphics();
     return 0;
 }

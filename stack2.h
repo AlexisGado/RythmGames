@@ -10,32 +10,37 @@ using namespace Imagine;
 #include <ctime>
 using namespace std ;
 
-#include <list>
-#include <tuple>
 
 
+struct Bloc
+{
+    double x;
+    double y;
+
+    int w;
+    int h;
+
+    AlphaColor col;
+
+};
 
 
-using couple = pair<int,double>;
-using lis = list<couple>;
-
-
-class Stack
+class Stack2
 {
     int w=800,h=600;
     Window Wmain;
 
-    int hsol = h/4;
-    int hbloc = h/20;
-    int wbloci = w/3;
-    double v = 0.005;
-    lis pile; // tailles et positions des bloc
+    int cbloci = w/3;
+    double v = 0.3;
     int score = 0;
 
+    Bloc fixe;
+    Bloc mobile;
+
     void init();
-    void afficheTout(lis pileCopie);
-    couple genBloc(int wbloc);
-    int calcTaille(couple mouv,couple fixe);
+    void affiche();
+    Bloc genBloc();
+    Bloc calcColl();
     bool bougeBloc();
 
     bool play();
