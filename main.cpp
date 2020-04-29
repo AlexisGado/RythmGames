@@ -1,13 +1,10 @@
 
 #include "stack.h"
-
+#include "general.h"
+#include "piano_tiles.h"
 
 int main()
 {
-    Stack Sta;
-    Sta.jeuSolo();
 
-
-    endGraphics();
     return 0;
 }
