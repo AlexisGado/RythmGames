@@ -15,9 +15,17 @@ using namespace std ;
 
 
 
+struct Bloc1
+{
+    double x;
+    int size;
 
-using couple = pair<int,double>;
-using lis = list<couple>;
+    Color col;
+};
+
+
+
+using lis = list<Bloc1>;
 
 
 class Stack
@@ -28,14 +36,14 @@ class Stack
     int hsol = h/4;
     int hbloc = h/20;
     int wbloci = w/3;
-    double v = 0.005;
+    double v = 0.3;
     lis pile; // tailles et positions des bloc
     int score = 0;
 
     void init();
     void afficheTout(lis pileCopie);
-    couple genBloc(int wbloc);
-    int calcTaille(couple mouv,couple fixe);
+    Bloc1 genBloc(int wbloc);
+    int calcTaille(Bloc1 mouv,Bloc1 fixe);
     bool bougeBloc();
 
     bool play();
@@ -43,8 +51,5 @@ class Stack
 public:
 
     void jeuSolo();
-
-
-
 
 };

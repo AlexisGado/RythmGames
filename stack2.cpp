@@ -100,7 +100,7 @@ bool Stack2::bougeBloc()
 
     affiche();
 
-    milliSleep(1);
+    milliSleep(2);
 
     return true;
 }

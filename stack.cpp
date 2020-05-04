@@ -1,64 +1,65 @@
 #include "stack.h"
 
 
-
-
-
 void Stack::init()
 {
     Wmain = openWindow(w,h);
     setActiveWindow(Wmain);
+    setBackGround(BLACK);
 
-    int xi = (w-wbloci)/2;
+    double xi = (w-wbloci)/2;
 
-    fillRect(xi,hsol,wbloci,hbloc,BLACK);
+    fillRect(int(xi),hsol,wbloci,hbloc,Color(200,0,0));
 
-    drawString(xi+10,hsol-30,"Cliquez pour commencer",BLUE,20,0,false,true);
-    pile.push_front(couple(wbloci,xi));
+    drawString(int(xi)+10,hsol-30,"Cliquez pour commencer",Color(200,0,0),20,0,false,true);
+
+    Bloc1 startBloc = {xi,wbloci,Color(200,0,0)};
+    pile.push_front(startBloc);
 }
 
 
 void Stack::afficheTout(lis pileCopie)
 {
-    clearWindow();
+    setBackGround(BLACK);
 
     int hactu = hsol;
+    Color coul = pileCopie.front().col;
 
     while(!pileCopie.empty())
     {
-        couple bloc = pileCopie.front();
+        Bloc1 bloc = pileCopie.front();
         pileCopie.pop_front();
-        fillRect(int(bloc.second),hactu,bloc.first,hbloc,BLACK);
+        fillRect(int(bloc.x),hactu,bloc.size,hbloc,bloc.col);
         hactu+=hbloc;
         if (hactu>h)
             break;
     }
-    drawString(w/2-5,30,to_string(score),BLUE,20,0,false,true);
+    drawString(w/2-5,80,to_string(score),coul,70,0,false,true);
 }
 
 
-couple Stack::genBloc(int wbloc)
+Bloc1 Stack::genBloc(int wbloc)
 {
-    int xdep = -wbloc;
-    return couple(wbloc,xdep);
+    double xdep = -wbloc;
+    return {xdep,wbloc,Color(200,byte(200*abs(sin(float(score+1)/10))),0)};
 }
 
 
-int Stack::calcTaille(couple mouv,couple fixe)
+int Stack::calcTaille(Bloc1 mouv,Bloc1 fixe)
 {
-    if (mouv.second<fixe.second)
-        return int(mouv.second)+mouv.first-int(fixe.second);
+    if (mouv.x<fixe.x)
+        return int(mouv.x)+mouv.size-int(fixe.x);
     else
-        return int(fixe.second)+fixe.first-int(mouv.second);
+        return int(fixe.x)+fixe.size-int(mouv.x);
 }
 
 
 bool Stack::bougeBloc()
 {
-    couple bloc = pile.front();
+    Bloc1 bloc = pile.front();
     pile.pop_front();
 
-    if (bloc.second > pile.front().second+pile.front().first)
+    if (bloc.x > pile.front().x+pile.front().size)
     {
         return false;
     }
@@ -69,7 +70,7 @@ bool Stack::bougeBloc()
 
     if (e.type == EVT_KEY_ON && e.key == ' ')
     {
-        if (bloc.second + bloc.first < pile.front().second)
+        if (bloc.x + bloc.size < pile.front().x)
         {
             return false;
         }
@@ -77,12 +78,12 @@ bool Stack::bougeBloc()
         score++;
         int nvTaille = calcTaille(bloc,pile.front());
 
-        bloc.first = nvTaille;
-        bloc.second = max(bloc.second,pile.front().second);
+        bloc.size = nvTaille;
+        bloc.x = max(bloc.x,pile.front().x);
 
         pile.push_front(bloc);
 
-        fillRect(int(bloc.second),hsol-hbloc,bloc.first,hbloc,WHITE);
+        fillRect(int(bloc.x),hsol-hbloc,bloc.size,hbloc,WHITE);
         lis pileCopie = pile;
         afficheTout(pileCopie);
 
@@ -90,13 +91,15 @@ bool Stack::bougeBloc()
     }
 
 
-    bloc.second+=v;
+    bloc.x+=v;
     pile.push_front(bloc);
 
 
-    fillRect(int(bloc.second)-1,hsol-hbloc,1,hbloc,WHITE);
-    fillRect(int(bloc.second),hsol-hbloc,bloc.first,hbloc,RED);
+    fillRect(int(bloc.x)-1,hsol-hbloc,1,hbloc,BLACK);
+    fillRect(int(bloc.x),hsol-hbloc,bloc.size,hbloc,bloc.col);
 
+
+    milliSleep(1);
     return true;
 }
 
@@ -114,7 +117,7 @@ bool Stack::play()
             afficheTout(pileCopie);
             cout<<"Perdu!"<<endl;
             cout<<"Score : "<<pile.size()-1<<endl;
-            break;
+            return false;
         }
 
     }
@@ -129,7 +132,7 @@ void Stack::jeuSolo()
 
     getKey();
 
-    fillRect(0,0,w,hsol,WHITE);
+    fillRect(0,0,w,hsol,BLACK);
 
 
     play();

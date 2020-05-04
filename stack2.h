@@ -31,7 +31,7 @@ class Stack2
     Window Wmain;
 
     int cbloci = w/3; // taille du bloc initial
-    double v = 0.3; //vitesse
+    double v = 0.6; //vitesse
     int pos_dep = 0; //position de depart du bloc : 0 = West ; 1 = North ; 2 = East ; 3 = South
     int score = 0;
 
@@ -49,8 +49,5 @@ class Stack2
 public:
 
     void jeuSolo();
-
-
-
 
 };
