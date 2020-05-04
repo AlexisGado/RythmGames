@@ -9,30 +9,30 @@ void Stack2::init()
     Wmain = openWindow(w,h);
     setActiveWindow(Wmain);
 
-    fixe = {double(w-cbloci)/2,double(h-cbloci)/2,cbloci,cbloci,AlphaColor(0,0,0)};
+    fixe = {double(w-cbloci)/2,double(h-cbloci)/2,cbloci,cbloci,Color(0,0,200)};
     mobile = genBloc();
 
     affiche();
 
-    drawString((w-cbloci)/2,(h-cbloci)/2-30,"Cliquez pour commencer",BLUE,20,0,false,true);
+    drawString((w-cbloci)/2 + 10,(h-cbloci)/2-30,"Cliquez pour commencer",BLUE,20,0,false,true);
 }
 
 
 void Stack2::affiche()
 {
-    clearWindow();
+    setBackGround(BLACK);
 
     fillRect(int(fixe.x),int(fixe.y),fixe.w,fixe.h,fixe.col);
     fillRect(int(mobile.x),int(mobile.y),mobile.w,mobile.h,mobile.col);
 
 
-    drawString(30,30,to_string(score),BLUE,20,0,false,true);
+    drawString(50,100,to_string(score),mobile.col,100,0,false,true);
 }
 
 
 Bloc Stack2::genBloc()
 {
-    Bloc newBloc = {-double(fixe.w),fixe.y,fixe.w,fixe.h,fixe.col+AlphaColor(0,10,0)};
+    Bloc newBloc = {-double(fixe.w),fixe.y,fixe.w,fixe.h,Color(0,byte(200*abs(sin(float(score+1)/6))),byte(200*abs(cos(float(score+1)/6))))};
     return newBloc;
 }
 

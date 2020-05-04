@@ -15,12 +15,12 @@ using namespace std ;
 struct Bloc
 {
     double x;
-    double y;
+    double y; //position du bloc
 
     int w;
-    int h;
+    int h; //taille du bloc
 
-    AlphaColor col;
+    Color col;
 
 };
 
@@ -30,8 +30,9 @@ class Stack2
     int w=800,h=600;
     Window Wmain;
 
-    int cbloci = w/3;
-    double v = 0.3;
+    int cbloci = w/3; // taille du bloc initial
+    double v = 0.3; //vitesse
+    int pos_dep = 0; //position de depart du bloc : 0 = West ; 1 = North ; 2 = East ; 3 = South
     int score = 0;
 
     Bloc fixe;
