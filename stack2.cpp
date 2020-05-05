@@ -32,7 +32,18 @@ void Stack2::affiche()
 
 Bloc Stack2::genBloc()
 {
-    Bloc newBloc = {-double(fixe.w),fixe.y,fixe.w,fixe.h,Color(0,byte(200*abs(sin(float(score+1)/6))),byte(200*abs(cos(float(score+1)/6))))};
+
+    int r = Random(0,4);
+    double xdep,ydep;
+
+    vx = dir[r][0];
+    vy = dir[r][1];
+
+    xdep = -(vx>0)*fixe.w + (vx<0)*w + (vx==0)*fixe.x;
+    ydep = -(vy>0)*fixe.h + (vy<0)*h + (vy==0)*fixe.y;
+
+
+    Bloc newBloc = {xdep,ydep,fixe.w,fixe.h,Color(0,byte(200*abs(sin(float(score+1)/6))),byte(200*abs(cos(float(score+1)/6))))};
     return newBloc;
 }
 
@@ -41,27 +52,32 @@ Bloc Stack2::calcColl()
 {
     Bloc nvBloc;
 
-    if (mobile.x<fixe.x)
-    {
-        nvBloc.w = int(mobile.x)+mobile.w-int(fixe.x);
-        nvBloc.x = fixe.x;
-    }
-    else
-    {
-        nvBloc.w = int(fixe.x)+fixe.w-int(mobile.x);
-        nvBloc.x = mobile.x;
-    }
+    nvBloc.x = max(fixe.x,mobile.x);
+    nvBloc.y = max(fixe.y,mobile.y);
+    nvBloc.w = fixe.w - int(abs(mobile.x-fixe.x));
+    nvBloc.h = fixe.h - int(abs(mobile.y-fixe.y));
 
-    if (mobile.y<fixe.y)
-    {
-        nvBloc.h = int(mobile.y)+mobile.h-int(fixe.y);
-        nvBloc.y = fixe.y;
-    }
-    else
-    {
-        nvBloc.h = int(fixe.y)+fixe.h-int(mobile.y);
-        nvBloc.y = mobile.y;
-    }
+
+//    if (mobile.x<fixe.x)
+//    {
+//        nvBloc.w = int(mobile.x)+mobile.w-int(fixe.x);
+//    }
+//    else
+//    {
+//        nvBloc.w = int(fixe.x)+fixe.w-int(mobile.x);
+//        nvBloc.x = mobile.x;
+//    }
+
+//    if (mobile.y<fixe.y)
+//    {
+//        nvBloc.h = int(mobile.y)+mobile.h-int(fixe.y);
+//        nvBloc.y = fixe.y;
+//    }
+//    else
+//    {
+//        nvBloc.h = int(fixe.y)+fixe.h-int(mobile.y);
+//        nvBloc.y = mobile.y;
+//    }
 
     nvBloc.col = mobile.col;
 
@@ -72,10 +88,24 @@ Bloc Stack2::calcColl()
 bool Stack2::bougeBloc()
 {
 
-    if (mobile.x > fixe.x+fixe.w)
+
+    if (vx == 1 && mobile.x > fixe.x+fixe.w)
     {
         return false;
     }
+    if (vy == 1 && mobile.y > fixe.y+fixe.h)
+    {
+        return false;
+    }
+    if (vx == -1 && mobile.x+mobile.w < fixe.x)
+    {
+        return false;
+    }
+    if (vy == -1 && mobile.y + mobile.h < fixe.y)
+    {
+        return false;
+    }
+
 
 
     Event e;
@@ -83,10 +113,24 @@ bool Stack2::bougeBloc()
 
     if (e.type == EVT_KEY_ON && e.key == ' ')
     {
-        if (mobile.x + mobile.w < fixe.x)
+
+        if (vx == -1 && mobile.x > fixe.x+fixe.w)
+         {
+            return false;
+        }
+        if (vy == -1 && mobile.y > fixe.y+fixe.h)
         {
             return false;
         }
+        if (vx == 1 && mobile.x+mobile.w < fixe.x)
+        {
+            return false;
+        }
+        if (vy == 1 && mobile.y + mobile.h < fixe.y)
+        {
+            return false;
+        }
+
 
         score++;
 
@@ -94,9 +138,8 @@ bool Stack2::bougeBloc()
         mobile = genBloc();
     }
 
-
-    mobile.x+=v;
-
+    mobile.x+=v*vx;
+    mobile.y+=v*vy;
 
     affiche();
 

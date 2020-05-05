@@ -10,7 +10,6 @@ using namespace Imagine;
 using namespace std ;
 
 #include <list>
-#include <tuple>
 
 void InitRandom();
 int Random(int a, int b); //randrange(a,b)

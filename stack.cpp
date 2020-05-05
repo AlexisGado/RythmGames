@@ -40,17 +40,32 @@ void Stack::afficheTout(lis pileCopie)
 
 Bloc1 Stack::genBloc(int wbloc)
 {
-    double xdep = -wbloc;
+    int rx = Random(0,2);
+    double xdep;
+
+    if (rx==1)
+    {
+        vx = 1;
+        xdep = -wbloc;
+    }
+    else
+    {
+        vx = -1;
+        xdep = w;
+    }
+
     return {xdep,wbloc,Color(200,byte(200*abs(sin(float(score+1)/10))),0)};
 }
 
 
 int Stack::calcTaille(Bloc1 mouv,Bloc1 fixe)
 {
+
     if (mouv.x<fixe.x)
         return int(mouv.x)+mouv.size-int(fixe.x);
     else
         return int(fixe.x)+fixe.size-int(mouv.x);
+
 }
 
 
@@ -59,9 +74,16 @@ bool Stack::bougeBloc()
     Bloc1 bloc = pile.front();
     pile.pop_front();
 
-    if (bloc.x > pile.front().x+pile.front().size)
+    if (vx == 1 && bloc.x > pile.front().x+pile.front().size)
     {
         return false;
+    }
+    else
+    {
+        if (vx == -1 && bloc.x + bloc.size < pile.front().x)
+        {
+            return false;
+        }
     }
 
 
@@ -70,9 +92,16 @@ bool Stack::bougeBloc()
 
     if (e.type == EVT_KEY_ON && e.key == ' ')
     {
-        if (bloc.x + bloc.size < pile.front().x)
+        if (vx == 1 && bloc.x + bloc.size < pile.front().x)
         {
             return false;
+        }
+        else
+        {
+            if (vx == -1 && bloc.x > pile.front().x+pile.front().size)
+            {
+                return false;
+            }
         }
 
         score++;
@@ -83,7 +112,6 @@ bool Stack::bougeBloc()
 
         pile.push_front(bloc);
 
-        fillRect(int(bloc.x),hsol-hbloc,bloc.size,hbloc,WHITE);
         lis pileCopie = pile;
         afficheTout(pileCopie);
 
@@ -91,13 +119,19 @@ bool Stack::bougeBloc()
     }
 
 
-    bloc.x+=v;
+    bloc.x+=v*vx;
     pile.push_front(bloc);
 
-
-    fillRect(int(bloc.x)-1,hsol-hbloc,1,hbloc,BLACK);
-    fillRect(int(bloc.x),hsol-hbloc,bloc.size,hbloc,bloc.col);
-
+    if (vx==1)
+    {
+        fillRect(int(bloc.x)-1,hsol-hbloc,1,hbloc,BLACK);
+        fillRect(int(bloc.x),hsol-hbloc,bloc.size,hbloc,bloc.col);
+    }
+    else
+    {
+        fillRect(int(bloc.x)+bloc.size,hsol-hbloc,1,hbloc,BLACK);
+        fillRect(int(bloc.x),hsol-hbloc,bloc.size,hbloc,bloc.col);
+    }
 
     milliSleep(1);
     return true;

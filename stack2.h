@@ -31,8 +31,13 @@ class Stack2
     Window Wmain;
 
     int cbloci = w/3; // taille du bloc initial
-    double v = 0.6; //vitesse
-    int pos_dep = 0; //position de depart du bloc : 0 = West ; 1 = North ; 2 = East ; 3 = South
+    double v = 0.6; //vitesse (norme)
+    int vx = 1;
+    int vy = 0;
+
+    int dir[4][2] = {{0,1},{0,-1},{1,0},{-1,0}};
+
+
     int score = 0;
 
     Bloc fixe;

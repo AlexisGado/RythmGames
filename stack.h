@@ -11,7 +11,7 @@ using namespace Imagine;
 using namespace std ;
 
 #include <list>
-#include <tuple>
+
 
 
 
@@ -37,6 +37,8 @@ class Stack
     int hbloc = h/20;
     int wbloci = w/3;
     double v = 0.3;
+    int vx=1;
+
     lis pile; // tailles et positions des bloc
     int score = 0;
 
