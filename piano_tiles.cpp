@@ -117,7 +117,7 @@ bool PianoTiles2::bougeBloc(){
     }
 
     Event e;
-    getEvent(20,e);
+    getEvent(10,e);
     //on récupère la commande de l'utilisateur
 
     if (e.type == EVT_KEY_ON && e.key != cases[pos]){ //si l'utilisateur clique sur la mauvaise touche
@@ -143,8 +143,8 @@ bool PianoTiles2::bougeBloc(){
 
     colorie();
 
-    if (100*v<score){ // plus le score est grand plus on augmente la vitesse
-        v+=0.1;
+    if (7*v<score){ // plus le score est grand plus on augmente la vitesse
+        v+=1;
     }
 
     return true;
@@ -182,8 +182,7 @@ void PianoTiles2::jeuSolo()
 
     play();
 
-    fillRect(0,0,w+w_m,h_mh,WHITE);
-    drawString(30, 40,"PERDU !",c_texte,30,0,false,true);
+    drawString(85, 280,"PERDU !",c_texte,60,0,false,true);
     drawString(30, 80,"Cliquez sur espace pour terminer",c_texte,15,0,false,true);
 
     getKey();
