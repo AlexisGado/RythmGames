@@ -182,7 +182,7 @@ void Stack2::jeuSolo()
 
     closeWindow(Wmain);
 
-    endGraphics();
+    Menu();
 
 }
 
