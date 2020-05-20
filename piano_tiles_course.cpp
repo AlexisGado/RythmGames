@@ -1,13 +1,13 @@
-#include "piano_tiles.h"
+#include "piano_tiles_course.h"
 
-void PianoTiles2::init(){
+void PianoTiles::init(){
 
     setActiveWindow(Wmain);
 
     clearWindow();
     // on initialise le tableau :
     int pos=0;
-    for (int j=4; j>0; j--){ // pour les 4 lignes du milieu-bas
+    for (int j=3; j>0; j--){ // pour les 4 lignes du milieu-bas
         pos=Random(0, 4); // position de la case noire
         for (int i=0; i<4; i++){
             if (i==pos){
@@ -20,6 +20,12 @@ void PianoTiles2::init(){
                 drawRect(t[i][j].x+w_m, t[i][j].y+h_mh, wbloc, hbloc, BLACK);
             }
         }
+    }
+    //pour la ligne du bas (ne joue pas au début):
+    for (int i=0; i<4; i++){
+        t[i][4]={i*wbloc, h-(5-4)*hbloc, WHITE};
+        fillRect(t[i][4].x+w_m, t[i][4].y+h_mh, wbloc, hbloc, YELLOW);
+        drawRect(t[i][4].x+w_m, t[i][4].y+h_mh, wbloc, hbloc, BLACK);
     }
     // pour la case en haut (la surface à colorier est plus petite) :
     pos=Random(0, 4);
@@ -41,7 +47,7 @@ void PianoTiles2::init(){
 
 
 
-void PianoTiles2::colorie(){
+void PianoTiles::colorie(){
     //objectif : colorier la grille à un instant donné
     //fonctionnement : on remet tout l'écran en blanc puis on colorie en fonction de qui est où
     //clearWindow(); // pas nécessaire si on recolorie toutes les cases à chaque fois
@@ -101,12 +107,12 @@ bool PianoTiles2::avance(){
 }
 
 
-bool PianoTiles2::bougeBloc(){
+bool PianoTiles::bougeBloc(){
     //fait jouer une itération, retourne false si le joueur a perdu
     point bloc;
     int pos=0;
     for (int i=0; i<4; i++){
-        if (t[i][ligne].c==BLACK){
+        if (t[i][1].c==BLACK){
             pos= i; //position du bloc sur lequel il va falloir cliquer, entre 0 et 3
             break;
         }
@@ -119,18 +125,8 @@ bool PianoTiles2::bougeBloc(){
     if (e.type == EVT_KEY_ON && e.key != cases[pos]){ //si l'utilisateur clique sur la mauvaise touche
         for (int i=0; i<4; i++){
             if (cases[i]==e.key){
-                if (ligne==0){
-                    fillRect(t[i][0].x+w_m, 0+h_mh, wbloc, hbloc+t[i][0].y, RED);
-                    drawRect(t[i][0].x+w_m, 0+h_mh, wbloc, hbloc+t[i][0].y, BLACK);
-                }
-                else if (ligne==4){
-                    fillRect(t[i][4].x+w_m, t[i][4].y+h_mh, wbloc, h-t[i][4].y, RED);
-                    drawRect(t[i][4].x+w_m, t[i][4].y+h_mh, wbloc, h-t[i][4].y, BLACK);
-                }
-                else if (ligne>0 && ligne<4){
-                    fillRect(t[i][ligne].x+w_m, t[i][ligne].y+h_mh, wbloc, hbloc, RED);
-                    drawRect(t[i][ligne].x+w_m, t[i][ligne].y+h_mh, wbloc, hbloc, BLACK);
-                }
+                fillRect(t[i][3].x+w_m, t[i][3].y+h_mh, wbloc, hbloc, RED);
+                drawRect(t[i][3].x+w_m, t[i][3].y+h_mh, wbloc, hbloc, BLACK);
             }
         }
         return false;
@@ -140,8 +136,7 @@ bool PianoTiles2::bougeBloc(){
     {
         //ici il faut augmenter le score et passer à la case suivante
         score++;
-        t[pos][ligne].c=Color(0, 179, 0);
-        ligne--;
+        t[pos][3].c=Color(0, 179, 0);
         fillRect(180,0,w,h_mh,WHITE);
         drawString(180,60,to_string(score),c_texte,30,0,false,true);
     }
@@ -154,14 +149,11 @@ bool PianoTiles2::bougeBloc(){
 
     colorie(); // on actualise l'affichage de la grille
 
-    if (7*v<score){ // plus le score est grand plus on augmente la vitesse
-        v+=1;
-    }
 
     return true; // si on n'est pas tombé sur une erreur alors on continue à jouer
 }
 
-bool PianoTiles2::play()
+bool PianoTiles::play()
 {
     bool ok=true;
     drawString(30,60,"Score : ",c_texte,30,0,false,true);
@@ -182,7 +174,7 @@ bool PianoTiles2::play()
 }
 
 
-void PianoTiles2::jeuSolo()
+void PianoTiles::jeuSolo()
 {
     int touche;
     InitRandom();
