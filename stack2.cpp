@@ -58,27 +58,6 @@ Bloc Stack2::calcColl()
     nvBloc.h = fixe.h - int(abs(mobile.y-fixe.y));
 
 
-//    if (mobile.x<fixe.x)
-//    {
-//        nvBloc.w = int(mobile.x)+mobile.w-int(fixe.x);
-//    }
-//    else
-//    {
-//        nvBloc.w = int(fixe.x)+fixe.w-int(mobile.x);
-//        nvBloc.x = mobile.x;
-//    }
-
-//    if (mobile.y<fixe.y)
-//    {
-//        nvBloc.h = int(mobile.y)+mobile.h-int(fixe.y);
-//        nvBloc.y = fixe.y;
-//    }
-//    else
-//    {
-//        nvBloc.h = int(fixe.y)+fixe.h-int(mobile.y);
-//        nvBloc.y = mobile.y;
-//    }
-
     nvBloc.col = mobile.col;
 
     return nvBloc;

@@ -173,6 +173,8 @@ void Stack::jeuSolo()
 
     closeWindow(Wmain);
 
+    Menu();
+
 }
 
 
