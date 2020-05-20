@@ -15,10 +15,11 @@ private:
     point t[4][5]; // tableau contenant les positions et couleurs des blocs
     // Une case est blanche s'il n'y a rien dessus, noir s'il va falloir la taper ou vert si elle a déjà été tapée
     int score = 0; // score du joueur
+    double temps = 0;
 
     void init();
     void colorie();
-    bool avance();
+    void avance();
     bool bougeBloc();
     bool play();
 

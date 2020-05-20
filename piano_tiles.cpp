@@ -43,7 +43,6 @@ void PianoTiles2::init(){
 
 void PianoTiles2::colorie(){
     //objectif : colorier la grille à un instant donné
-    //fonctionnement : on remet tout l'écran en blanc puis on colorie en fonction de qui est où
     //clearWindow(); // pas nécessaire si on recolorie toutes les cases à chaque fois
     for (int i=0; i<4; i++){
         //si on est en haut de la fenetre :
@@ -171,7 +170,7 @@ bool PianoTiles2::play()
 
         if (!bougeBloc()) // donc si on a perdu la partie
         {
-            cout<<"Vous avez joué à Piano Tiles."<<endl;
+            cout<<"Vous avez joue a Piano Tiles, version arcade."<<endl;
             cout<<"Votre score : "<<score<<endl;
             ok=false;
         }
@@ -202,7 +201,6 @@ void PianoTiles2::jeuSolo()
     drawString(85, 280,"PERDU !",c_texte,60,0,false,true);
     drawString(85,320,"Score : ",c_texte,30,0,false,true);
     drawString(235,320,to_string(score),c_texte,30,0,false,true);
-    //drawString(30, 80,"Cliquer sur espace pour terminer",c_texte,15,0,false,true);
     drawString(30, 40,"Cliquer sur entrer pour rejouer",c_texte,15,0,false,true);
     drawString(30, 70,"Cliquer ailleurs pour terminer",c_texte,15,0,false,true);
 

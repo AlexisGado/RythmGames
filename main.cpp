@@ -1,6 +1,6 @@
 #include "stack.h"
 #include "general.h"
-#include "piano_tiles.h"
+#include "piano_tiles_course.h"
 
 int main()
 {

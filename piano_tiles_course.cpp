@@ -49,7 +49,6 @@ void PianoTiles::init(){
 
 void PianoTiles::colorie(){
     //objectif : colorier la grille à un instant donné
-    //fonctionnement : on remet tout l'écran en blanc puis on colorie en fonction de qui est où
     //clearWindow(); // pas nécessaire si on recolorie toutes les cases à chaque fois
     for (int i=0; i<4; i++){
         //si on est en haut de la fenetre :
@@ -69,51 +68,35 @@ void PianoTiles::colorie(){
 
 
 
-bool PianoTiles2::avance(){
+void PianoTiles::avance(){
     //fait avancer d'une unité tous les blocs
-    // retourne false si la touche est sortie de l'écran alors qu'on n'a pas cliqué, true sinon
-    if (t[0][0].y+v<0){ //aucun nouveau bloc ne va apparaitre en haut ni disparaitre en bas
-        for (int i=0; i<4; i++){
-            for (int j=0; j<5; j++){
-                t[i][j].y+=v;
-            }
+    //il faut faire apparaitre un bloc en haut, disparaitre un bloc en bas, et décaller tout le tableau
+    int pos=Random(0, 4); // nb entier aléatoire entre 0 et 3, position de la future case noire
+    for (int i=0; i<4; i++){
+        for (int j=4; j>0; j--){
+            t[i][j].y=t[i][j-1].y;
+            t[i][j].c=t[i][j-1].c;
+        }
+        // pour la nouvelle ligne :
+        t[i][0].x=i*wbloc;
+        t[i][0].y=h-5*hbloc;
+        if (pos==i){
+            t[i][0].c=BLACK;
+        }
+        else {
+            t[i][0].c=WHITE;
         }
     }
-    else { //il faut faire apparaitre un bloc en haut, disparaitre un bloc en bas, et décaller tout le tableau
-        if (ligne>=4){ //si la case qui va disparaitre est noire, càd que le joueur a perdu
-            return false;
-        }
-        ligne++;
-        int pos=Random(0, 4); // nb entier aléatoire entre 0 et 3, position de la future case noire
-        for (int i=0; i<4; i++){
-            for (int j=4; j>0; j--){
-                t[i][j].y=t[i][j-1].y+v;
-                t[i][j].c=t[i][j-1].c;
-            }
-            // pour la nouvelle ligne :
-            t[i][0].x=i*wbloc;
-            t[i][0].y=h-5*hbloc;
-            if (pos==i){
-                t[i][0].c=BLACK;
-            }
-            else {
-                t[i][0].c=WHITE;
-            }
-        }
-
-
-    }
-    return true;
 }
 
-
 bool PianoTiles::bougeBloc(){
-    //fait jouer une itération, retourne false si le joueur a perdu
+    // fait jouer une itération, retourne false si le joueur a perdu
+    // la ligne sur laquelle il va falloir cliquer est la ligne 3
     point bloc;
     int pos=0;
     for (int i=0; i<4; i++){
-        if (t[i][1].c==BLACK){
-            pos= i; //position du bloc sur lequel il va falloir cliquer, entre 0 et 3
+        if (t[i][3].c==BLACK){
+            pos= i; // position du bloc sur lequel il va falloir cliquer, entre 0 et 3
             break;
         }
     }
@@ -129,6 +112,7 @@ bool PianoTiles::bougeBloc(){
                 drawRect(t[i][3].x+w_m, t[i][3].y+h_mh, wbloc, hbloc, BLACK);
             }
         }
+        cout << "Vous avez cliqué sur la mauvaise touche !"<<endl;
         return false;
     }
 
@@ -137,34 +121,35 @@ bool PianoTiles::bougeBloc(){
         //ici il faut augmenter le score et passer à la case suivante
         score++;
         t[pos][3].c=Color(0, 179, 0);
-        fillRect(180,0,w,h_mh,WHITE);
-        drawString(180,60,to_string(score),c_texte,30,0,false,true);
+        avance(); // on avance le tableau
+        colorie(); // on actualise l'affichage de la grille
     }
 
-    bool pas_perdu=avance(); // vaut false si on a perdu (car la touche est sortie de l'écran alors qu'on n'a pas cliqué)
-    if (pas_perdu==false){ // càd si on a perdu
-        cout << "Vous n'avez pas tape a temps !" << endl;
+    fillRect(180,0,w,h_mh,WHITE);
+    drawString(180,60,to_string(temps),c_texte,30,0,false,true);
+
+    if (score>=50){
         return false;
     }
-
-    colorie(); // on actualise l'affichage de la grille
-
-
     return true; // si on n'est pas tombé sur une erreur alors on continue à jouer
 }
 
 bool PianoTiles::play()
 {
     bool ok=true;
-    drawString(30,60,"Score : ",c_texte,30,0,false,true);
-    drawString(180,60,to_string(score),c_texte,30,0,false,true);
+    drawString(30,60,"Temps : ",c_texte,30,0,false,true);
+    drawString(180,60,to_string(temps),c_texte,30,0,false,true);
     while (ok)
     {
-
-        if (!bougeBloc()) // donc si on a perdu la partie
+        if (!bougeBloc()) // donc si on a fini
         {
-            cout<<"Vous avez joué à Piano Tiles."<<endl;
-            cout<<"Votre score : "<<score<<endl;
+            cout<<"Vous avez joue a Piano Tiles, version course."<<endl;
+            if (score>=50){
+                cout<<"Votre temps : "<<temps<<endl;
+            }
+            else {
+                cout << "Vous avez perdu !"<<endl;
+            }
             ok=false;
         }
 
@@ -191,10 +176,14 @@ void PianoTiles::jeuSolo()
     play();
 
     fillRect(0,0,w+w_m,h_mh,WHITE);
-    drawString(85, 280,"PERDU !",c_texte,60,0,false,true);
-    drawString(85,320,"Score : ",c_texte,30,0,false,true);
-    drawString(235,320,to_string(score),c_texte,30,0,false,true);
-    //drawString(30, 80,"Cliquer sur espace pour terminer",c_texte,15,0,false,true);
+    if (score>=50){
+        drawString(85, 280,"BRAVO !",c_texte,60,0,false,true);
+        drawString(85,320,"Temps : ",c_texte,30,0,false,true);
+        drawString(235,320,to_string(temps),c_texte,30,0,false,true);
+    }
+    else {
+        drawString(85, 280,"PERDU !",c_texte,60,0,false,true);
+    }
     drawString(30, 40,"Cliquer sur entrer pour rejouer",c_texte,15,0,false,true);
     drawString(30, 70,"Cliquer ailleurs pour terminer",c_texte,15,0,false,true);
 
