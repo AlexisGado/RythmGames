@@ -208,6 +208,8 @@ void PianoTiles::jeuSolo()
 
     closeWindow(Wmain);
 
+    Menu();
+
     endGraphics();
 
 }

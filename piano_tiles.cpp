@@ -212,6 +212,8 @@ void PianoTiles2::jeuSolo()
 
     closeWindow(Wmain);
 
+    Menu();
+
     endGraphics();
 
 }

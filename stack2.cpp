@@ -112,6 +112,10 @@ bool Stack2::bougeBloc()
 
 
         score++;
+        if (score%5==0)
+        {
+            v*=1.1;
+        }
 
         fixe = calcColl();
         mobile = genBloc();
@@ -132,6 +136,7 @@ bool Stack2::play()
 {
     while (true)
     {
+
 
         if (!bougeBloc())
         {

@@ -105,6 +105,11 @@ bool Stack::bougeBloc()
         }
 
         score++;
+        if (score%5==0)
+        {
+            v*=1.1;
+        }
+
         int nvTaille = calcTaille(bloc,pile.front());
 
         bloc.size = nvTaille;
