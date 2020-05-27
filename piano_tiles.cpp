@@ -153,7 +153,7 @@ bool PianoTiles2::bougeBloc(){
 
     colorie(); // on actualise l'affichage de la grille
 
-    if (7*v<score){ // plus le score est grand plus on augmente la vitesse
+    if (10*v<score){ // plus le score est grand plus on augmente la vitesse
         v+=1;
     }
 

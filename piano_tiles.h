@@ -18,7 +18,7 @@ private:
 
     Window Wmain;
 
-    double v = 1; // vitesse des blocs
+    double v = 2; // vitesse des blocs
     point t[4][5]; // tableau contenant les positions et couleurs des blocs
     // Une case est blanche s'il n'y a rien dessus, noir s'il va falloir la taper ou vert si elle a déjà été tapée
     int ligne=4; // ligne du tableau avec la première case noire (càd case à taper)
