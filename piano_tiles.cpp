@@ -46,7 +46,6 @@ void PianoTiles2::init(){
 
 void PianoTiles2::colorie(){
     //objectif : colorier la grille à un instant donné
-    //clearWindow(); // pas nécessaire si on recolorie toutes les cases à chaque fois
     for (int i=0; i<4; i++){
         //si on est en haut de la fenetre :
         fillRect(t[i][0].x+w_m, 0+h_mh, wbloc, hbloc+t[i][0].y, t[i][0].c);

@@ -59,7 +59,6 @@ void PianoTiles::init(){
 
 void PianoTiles::colorie(){
     //objectif : colorier la grille à un instant donné
-    //clearWindow(); // pas nécessaire si on recolorie toutes les cases à chaque fois
     for (int i=0; i<4; i++){
         //si on est en haut de la fenetre :
         fillRect(u[i][0].x+w_m, 0+h_mh, wbloc, h-4*hbloc, t[i][0]); // avant : hbloc+t[i][0].y avec t[i][0].y<0
@@ -84,12 +83,10 @@ void PianoTiles::avance(){
     int pos=Random(0, 4); // nb entier aléatoire entre 0 et 3, position de la future case noire
     for (int i=0; i<4; i++){ //pour chaque colonne :
         for (int j=4; j>0; j--){
-            // ici, faut-il actualiser u ?
             t[i][j]=t[i][j-1];
         }
         // pour la nouvelle ligne :
-        // idem pour u ici ?
-        if (score<57){
+        if (score<47){ // tant qu'on n'a pas atteint 47, on continue à générer des blocs
             if (pos==i){
                 t[i][0]=BLACK;
             }
@@ -97,7 +94,7 @@ void PianoTiles::avance(){
                 t[i][0]=WHITE;
             }
         }
-        else {
+        else { // c'est la fin du jeu version course
             t[i][0]=YELLOW;
         }
     }
