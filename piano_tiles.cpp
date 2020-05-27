@@ -4,6 +4,9 @@ void PianoTiles2::init(){
 
     setActiveWindow(Wmain);
 
+    v=2;
+    score = 0;
+    ligne =4;
     clearWindow();
     // on initialise le tableau :
     int pos=0;
@@ -102,7 +105,6 @@ bool PianoTiles2::avance(){
 
 bool PianoTiles2::bougeBloc(){
     //fait jouer une itération, retourne false si le joueur a perdu
-    point bloc;
     int pos=0;
     for (int i=0; i<4; i++){
         if (t[i][ligne].c==BLACK){

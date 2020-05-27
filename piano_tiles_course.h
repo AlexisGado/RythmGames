@@ -1,5 +1,10 @@
 #pragma once
 #include "general.h"
+#include <math.h>
+
+struct point_course {
+    int x,y; //coordonées
+};
 
 class PianoTiles {
 private:
@@ -12,10 +17,13 @@ private:
 
     Window Wmain;
 
-    point t[4][5]; // tableau contenant les positions et couleurs des blocs
+    point_course u[4][5];
+    Color t[4][5]; // tableau contenant les positions et couleurs des blocs
+
     // Une case est blanche s'il n'y a rien dessus, noir s'il va falloir la taper ou vert si elle a déjà été tapée
     int score = 0; // score du joueur
-    double temps = 0;
+    int temps_debut = 0;
+    int temps_actuel = 0;
 
     void init();
     void colorie();

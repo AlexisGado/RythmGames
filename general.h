@@ -14,6 +14,7 @@ using namespace std ;
 #include "stack.h"
 #include "stack2.h"
 #include "piano_tiles.h"
+#include "piano_tiles_course.h"
 
 void InitRandom();
 int Random(int a, int b); //randrange(a,b)
