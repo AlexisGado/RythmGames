@@ -2,7 +2,10 @@
 
 
 
-
+// Les fonctions sont les memes que pour stack et fonctionnent globalement de la meme maniere
+// cette fois-ci il y a 4 directions a gerer
+// et on est obliges de tout re-afficher a chaque frame parce que les blocs peuvent passer l un au dessus de l autre
+// Les performances peuvent donc etre un peu affectees
 
 void Stack2::init()
 {
