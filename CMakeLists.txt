@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.9)
 
 # Define a new project
 project(atel_prog)
+
+ list(APPEND CMAKE_PREFIX_PATH "/usr/local/Qt-5.15.2")
 
 # Find Imagine++ library
 file(TO_CMAKE_PATH "$ENV{IMAGINEPP_ROOT}/CMake" p)
